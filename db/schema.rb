@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 2019_11_15_201041) do
     t.integer "floor"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_users_on_name", unique: true
   end
 
 end

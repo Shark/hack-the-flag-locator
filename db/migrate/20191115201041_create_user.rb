@@ -6,6 +6,7 @@ class CreateUser < ActiveRecord::Migration[5.2]
       t.integer :x_coordinate
       t.integer :y_coordinate
       t.integer :floor
+      t.index :name, unique: true
       t.timestamps
     end
   end
