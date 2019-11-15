@@ -1,1 +1,4 @@
-%H1= "Hey there #{@user.name}"
+%h1= "Hey there #{@user.name}"
+
+= link_to '#' do
+  %button#join_game_button{disabled: true} Join Game
