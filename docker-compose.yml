@@ -1,0 +1,13 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: 'locator'
+      POSTGRES_PASSWORD: 'none'
+    ports:
+      - 15432:5432
+  redis:
+    image: redis
+    ports:
+      - 16379:6379
