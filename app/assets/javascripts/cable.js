@@ -10,4 +10,9 @@
 
   App.cable = ActionCable.createConsumer();
 
+  App.cable.subscriptions.create({ channel: "WaitForMacChannel" }, {
+    received(data) {
+      console.log(data)
+    }
+  })
 }).call(this);
