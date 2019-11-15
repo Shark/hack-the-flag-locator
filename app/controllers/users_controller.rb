@@ -27,6 +27,7 @@ class UsersController < ApplicationController
     return head :not_found if user.blank?
 
     user.update mac: params[:user][:mac]
+    WaitForMacChannel.broadcast_to user, ENV.fetch('GAME_REDIRECT') + user.name
     head :no_content
   end
 

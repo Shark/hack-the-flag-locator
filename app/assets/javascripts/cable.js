@@ -11,8 +11,15 @@
   App.cable = ActionCable.createConsumer();
 
   App.cable.subscriptions.create({ channel: "WaitForMacChannel" }, {
-    received(data) {
-      console.log(data)
+    received(url) {
+      let btn = document.querySelector('#join_game_button')
+
+      if(btn) {
+        btn.removeAttribute('disabled')
+        btn.addEventListener('click', function () {
+          location.href = url
+        })
+      }
     }
   })
 }).call(this);
