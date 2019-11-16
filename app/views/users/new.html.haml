@@ -1,4 +1,9 @@
-%h1 Welcome to Hack the Flag
+.jumbotron
+  %h1.display-4 Welcome to Hack the Flag
 
-= form_with url: create_path do
-  = submit_tag 'Register'
+  %p.lead Welcome to a location based AR Game for indoor events
+
+  %hr.my-4
+
+  = form_with url: create_path do
+    = submit_tag 'Start!', class: 'btn btn-primary btn-large'
