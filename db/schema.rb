@@ -10,10 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_16_002403) do
+ActiveRecord::Schema.define(version: 2019_11_16_193724) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "BackendTest", id: false, force: :cascade do |t|
+    t.string "Id"
+    t.float "x"
+    t.float "y"
+    t.integer "z"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "name"
@@ -23,6 +30,11 @@ ActiveRecord::Schema.define(version: 2019_11_16_002403) do
     t.integer "floor"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "building"
+    t.datetime "floor_timeout"
+    t.string "from_wifi"
+    t.string "to_wifi"
+    t.integer "selected_floor"
     t.index ["name", "mac"], name: "index_users_on_name_and_mac", unique: true
   end
 
