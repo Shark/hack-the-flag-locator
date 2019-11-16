@@ -8,6 +8,15 @@ namespace :user do
     end
   end
 
+  desc 'communicate with users on registration page'
+  task user_registration: :environment do
+    communicator = UserCommunicator.new(influxdb_url: ENV.fetch('INFLUXDB_URL'))
+    loop do
+      communicator.run
+      sleep 5
+    end
+  end
+
   desc 'import a JSON file, usage: user:import[path]'
   task :import, [:file] => :environment do |t, args|
     ImportUser = Struct.new(:timestamp, :mac, :x, :y, :z)
