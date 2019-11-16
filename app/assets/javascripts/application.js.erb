@@ -14,10 +14,3 @@
 //= require activestorage
 //= require turbolinks
 //= require_tree .
-
-document.addEventListener('DOMContentLoaded',async function() {
-  let username = ''
-  if(username = document.querySelector('body').dataset.username) {
-    let result = await fetch('/test.json?username=' + encodeURI(username))
-  }
-})

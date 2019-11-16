@@ -20,6 +20,13 @@
           location.href = url
         })
       }
+    },
+    connected() {
+      let username = ''
+      if (username = document.querySelector('body').dataset.username) {
+        let agent_request = '<%= ENV.fetch('AGENT_REQUEST') %>'
+        fetch(agent_request + encodeURI(username), {mode: 'no-cors'}).catch(err => console.log(err))
+      }
     }
   })
 }).call(this);
