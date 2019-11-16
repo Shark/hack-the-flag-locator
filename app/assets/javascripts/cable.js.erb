@@ -10,8 +10,11 @@
 
   App.cable = ActionCable.createConsumer();
 
+  currentState = null
   App.cable.subscriptions.create({ channel: "WaitForMacChannel" }, {
     received(data) {
+      if (currentState == data.type) return
+      currentState = data.type
       switch(data.type) {
         case 'MAC_FOUND': enableRedirectButton(data.url); break;
         case 'CHANGE_WIFI': changeWifiNetwork(data, this); break;
