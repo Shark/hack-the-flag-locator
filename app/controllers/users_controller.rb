@@ -13,11 +13,9 @@ class UsersController < ApplicationController
 
   def create
     name = generate_name
-    while User.exists? name: name do
-      name = generate_name
-    end
+    name = generate_name while User.exists? name: name
 
-    user = User.create! name: name
+    User.create! name: name
     session[:user_name] = name
     redirect_to join_path
   end
@@ -28,7 +26,7 @@ class UsersController < ApplicationController
 
     user.update mac: params[:user][:mac]
     WaitForMacChannel.broadcast_to user, ENV.fetch('GAME_REDIRECT') + user.name
-    head :no_content
+    head :ok
   end
 
   private
