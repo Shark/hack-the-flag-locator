@@ -6,4 +6,8 @@ Rails.application.routes.draw do
   post :create, to: 'users#create', as: :create
   post 'users/:user_name', to: 'users#update', as: :update
   mount ActionCable.server, at: '/cable'
+
+  scope '/.well-known', controller: :health do
+    get :health_check
+  end
 end
