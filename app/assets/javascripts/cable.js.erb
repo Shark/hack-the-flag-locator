@@ -16,6 +16,7 @@
         case 'MAC_FOUND': enableRedirectButton(data.url); break;
         case 'CHANGE_WIFI': changeWifiNetwork(data); break;
         case 'WIFI': wifiNetwork(data); break;
+        case 'FLOOR': setFloor(data); break;
       }
     },
     connected() {
@@ -42,7 +43,8 @@ function enableRedirectButton(url) {
   })
 }
 
-function wifiNetwork({ wifis, userCount }) {
+function wifiNetwork({ userCount }) {
+  let wifis = ['eduroam', 'Junction', 'aalto open']
   let content = document.querySelector('#content')
   addUserCount(content, userCount)
 
@@ -61,7 +63,8 @@ function wifiNetwork({ wifis, userCount }) {
   })
 }
 
-function changeWifiNetwork({ wifis, userCount }) {
+function changeWifiNetwork({ userCount }) {
+  let wifis = ['eduroam', 'Junction', 'aalto open']
   let content = document.querySelector('#content')
   addUserCount(content, userCount)
 
@@ -77,6 +80,27 @@ function changeWifiNetwork({ wifis, userCount }) {
   content.appendChild(selectGotoWifi)
   selectGotoWifi.addEventListener('change',() => {
     console.log('NOTIFY SERVER')
+  })
+}
+
+function setFloor({ userCount }) {
+  let content = document.querySelector('#content')
+  addUserCount(content, userCount)
+  let floorIds = [2, 1, 0]
+
+  content.innerHTML += '<p>Please tell us in which floor you are, this will help us to find you.</p>'
+  floorIds.map((id) => {
+    let btn = document.createElement('button')
+    btn.setAttribute('class', 'btn btn-dark')
+    btn.innerHTML = `<img src="/plans/${id}.png" width='100%'/>`
+    let wrapper_row = document.createElement('div')
+    let wrapper_col = document.createElement('div')
+    wrapper_row.setAttribute('class', 'row')
+    wrapper_col.setAttribute('class', 'col-md')
+    wrapper_row.appendChild(wrapper_col)
+    wrapper_col.appendChild(btn)
+    content.appendChild(wrapper_row)
+    btn.addEventListener('click', () => console.log('NOTIFY SERVER'))
   })
 }
 
