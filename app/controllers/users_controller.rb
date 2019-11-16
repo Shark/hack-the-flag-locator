@@ -20,15 +20,6 @@ class UsersController < ApplicationController
     redirect_to join_path
   end
 
-  def update
-    user = User.find_by name: params[:user_name]
-    return head :not_found if user.blank?
-
-    user.update mac: params[:user][:mac]
-    WaitForMacChannel.broadcast_to user, ENV.fetch('GAME_REDIRECT') + user.name
-    head :ok
-  end
-
   private
 
   def generate_name
