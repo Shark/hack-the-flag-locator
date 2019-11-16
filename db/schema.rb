@@ -15,13 +15,6 @@ ActiveRecord::Schema.define(version: 2019_11_16_193724) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "BackendTest", id: false, force: :cascade do |t|
-    t.string "Id"
-    t.float "x"
-    t.float "y"
-    t.integer "z"
-  end
-
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "mac"
