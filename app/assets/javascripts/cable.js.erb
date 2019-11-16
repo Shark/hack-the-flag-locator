@@ -14,7 +14,7 @@
     received(data) {
       switch(data.type) {
         case 'MAC_FOUND': enableRedirectButton(data.url); break;
-        case 'CHANGE_WIFI': changeWifiNetwork(data.network); break;
+        case 'CHANGE_WIFI': changeWifiNetwork(data); break;
       }
     },
     connected() {
@@ -27,6 +27,7 @@
   })
 }).call(this);
 
+
 function enableRedirectButton(url) {
   let content = document.querySelector('#content')
   let btn = document.createElement('button')
@@ -38,4 +39,27 @@ function enableRedirectButton(url) {
   btn.addEventListener('click', function () {
     location.href = url
   })
+}
+
+function changeWifiNetwork({ wifis, userCount }) {
+  let content = document.querySelector('#content')
+  addUserCount(content, userCount)
+
+  content.innerHTML += '<p>In order to find you, we need ask you to change your WIFI network. Please select the network you want to connect to. Than change the network.</p>'
+  let selectGotoWifi = document.createElement('select')
+  selectGotoWifi.setAttribute('class', 'form-control')
+  wifis.map((wifiName) => {
+    let wifi = document.createElement('option')
+    wifi.text = wifiName
+    wifi.value = wifiName
+    selectGotoWifi.appendChild(wifi)
+  })
+  content.appendChild(selectGotoWifi)
+  selectGotoWifi.addEventListener(() => {
+    console.log('NOTIFY SERVER')
+  })
+}
+
+function addUserCount(content, userCount) {
+  content.innerHTML = '<h2>You could be one of ' + userCount + ' Users</h2>'
 }
