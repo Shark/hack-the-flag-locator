@@ -5,12 +5,12 @@ class DeviceLocator
 
   def total_user_count(ssid: nil)
     query_suffix = "and ssid = '#{ssid}'" if ssid
-    users = db.query("select count(x) from movement where time > now()-5m #{query_suffix} group by mac")
+    users = db.query("select count(x) from movement where time > now()-3m #{query_suffix} group by mac")
     users.count
   end
 
   def switched_users
-    grouped = db.query 'select * from movement where time > now()-5m group by ssid'
+    grouped = db.query 'select * from movement where time > now()-3m group by ssid'
     grouped.select! {|entry| ['aalto', 'aalto open', 'Junction', 'eduroam'].include? entry['tags']['ssid']}
 
     mapping = {}
@@ -22,7 +22,7 @@ class DeviceLocator
     end
 
     mapping.select! {|_mac, ssids| ssids.count > 1}
-    mapping = mapping.map do |mac, ssids|
+    mapping.map do |mac, ssids|
       group_first = grouped.find {|group| group['tags']['ssid'] == ssids[0]}
       group_second = grouped.find {|group| group['tags']['ssid'] == ssids[1]}
       entry_first = group_first['values'].reverse_each.find {|entry| entry['mac'] == mac}
