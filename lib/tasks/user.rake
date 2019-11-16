@@ -1,4 +1,13 @@
 namespace :user do
+  desc 'update user locations'
+  task :update => :environment do
+    updater = UserUpdater.new(influxdb_url: ENV.fetch('INFLUXDB_URL'))
+    loop do
+      updater.run
+      sleep 5
+    end
+  end
+
   desc 'import a JSON file, usage: user:import[path]'
   task :import, [:file] => :environment do |t, args|
     ImportUser = Struct.new(:timestamp, :mac, :x, :y, :z)
