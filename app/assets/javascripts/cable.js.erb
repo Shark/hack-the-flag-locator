@@ -15,6 +15,7 @@
       switch(data.type) {
         case 'MAC_FOUND': enableRedirectButton(data.url); break;
         case 'CHANGE_WIFI': changeWifiNetwork(data); break;
+        case 'WIFI': wifiNetwork(data); break;
       }
     },
     connected() {
@@ -41,6 +42,25 @@ function enableRedirectButton(url) {
   })
 }
 
+function wifiNetwork({ wifis, userCount }) {
+  let content = document.querySelector('#content')
+  addUserCount(content, userCount)
+
+  content.innerHTML += '<p>Please select your current WIFI Network, so we have a better chance to find you</p>'
+  let selectGotoWifi = document.createElement('select')
+  selectGotoWifi.setAttribute('class', 'form-control')
+  wifis.map((wifiName) => {
+    let wifi = document.createElement('option')
+    wifi.text = wifiName
+    wifi.value = wifiName
+    selectGotoWifi.appendChild(wifi)
+  })
+  content.appendChild(selectGotoWifi)
+  selectGotoWifi.addEventListener('change', () => {
+    console.log('NOTIFY SERVER')
+  })
+}
+
 function changeWifiNetwork({ wifis, userCount }) {
   let content = document.querySelector('#content')
   addUserCount(content, userCount)
@@ -55,7 +75,7 @@ function changeWifiNetwork({ wifis, userCount }) {
     selectGotoWifi.appendChild(wifi)
   })
   content.appendChild(selectGotoWifi)
-  selectGotoWifi.addEventListener(() => {
+  selectGotoWifi.addEventListener('change',() => {
     console.log('NOTIFY SERVER')
   })
 }
