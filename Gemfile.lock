@@ -102,6 +102,7 @@ GEM
       railties (>= 4.0.1)
     i18n (1.7.0)
       concurrent-ruby (~> 1.0)
+    influxdb (0.7.0)
     io-like (0.3.0)
     jbuilder (2.9.1)
       activesupport (>= 4.2.0)
@@ -237,6 +238,7 @@ DEPENDENCIES
   dotenv-rails
   faker
   hamlit-rails
+  influxdb
   jbuilder (~> 2.5)
   listen (>= 3.0.5, < 3.2)
   pg (>= 0.18, < 2.0)

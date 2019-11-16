@@ -37,6 +37,7 @@ gem 'hamlit-rails'
 gem 'faker'
 gem 'dotenv-rails'
 gem 'rack-cors'
+gem 'influxdb'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
