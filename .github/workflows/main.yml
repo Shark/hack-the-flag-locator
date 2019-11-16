@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: Dokku deploy
-        uses: actions/deploy@master
+        uses: ./.github/actions/deploy
         env:
           PRIVATE_KEY: ${{ secrets.DEPLOY_KEY }}
           HOST: hack-the-flag.xyz
