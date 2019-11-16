@@ -16,6 +16,7 @@
 
       if(btn) {
         btn.removeAttribute('disabled')
+        btn.setAttribute('class', 'btn btn-primary')
         btn.addEventListener('click', function () {
           location.href = url
         })
