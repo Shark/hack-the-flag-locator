@@ -11,15 +11,10 @@
   App.cable = ActionCable.createConsumer();
 
   App.cable.subscriptions.create({ channel: "WaitForMacChannel" }, {
-    received(url) {
-      let btn = document.querySelector('#join_game_button')
-
-      if(btn) {
-        btn.removeAttribute('disabled')
-        btn.setAttribute('class', 'btn btn-primary')
-        btn.addEventListener('click', function () {
-          location.href = url
-        })
+    received(data) {
+      switch(data.type) {
+        case 'MAC_FOUND': enableRedirectButton(data.url); break;
+        case 'CHANGE_WIFI': changeWifiNetwork(data.network); break;
       }
     },
     connected() {
@@ -31,3 +26,16 @@
     }
   })
 }).call(this);
+
+function enableRedirectButton(url) {
+  let content = document.querySelector('#content')
+  let btn = document.createElement('button')
+
+  content.innerHTML = '<h2>We found you!</h2>'
+  content.appendChild(btn)
+  btn.innerHTML = 'Join Game'
+  btn.setAttribute('class', 'btn btn-primary')
+  btn.addEventListener('click', function () {
+    location.href = url
+  })
+}
