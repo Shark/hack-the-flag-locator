@@ -5,6 +5,9 @@ class UserCommunicator
   end
 
   def run
+    # delete old users
+    User.where('created_at < ?', 1.hour.ago).delete_all
+
     total_user_count = locator.total_user_count
 
     # awaiting instructions
