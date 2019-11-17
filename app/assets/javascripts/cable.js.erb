@@ -48,7 +48,7 @@ function wifiNetwork({ userCount }, cable) {
   btn.innerHTML = 'Send'
   addUserCount(content, userCount)
 
-  content.innerHTML += '<p>Please select your current WIFI Network, so we have a better chance to find you</p>'
+  content.innerHTML += '<p>Please select your current WIFI Network from the list, so we have a better chance to find you</p>'
   let selectGroup = document.createElement('div')
   selectGroup.setAttribute('class', 'form-group')
   let selectGotoWifi = document.createElement('select')
@@ -75,7 +75,7 @@ function changeWifiNetwork({ userCount }, cable) {
   btn.innerHTML = 'Send'
   addUserCount(content, userCount)
 
-  content.innerHTML += '<p>In order to find you, we need ask you to change your WIFI network. Please select the network you want to connect to. Then change the network.</p>'
+  content.innerHTML += '<p>In order to find you, we need ask you to change your WIFI network. Please change the network first, then select the network you connected to.</p>'
   let selectGroup = document.createElement('div')
   selectGroup.setAttribute('class', 'form-group')
   let selectGotoWifi = document.createElement('select')
@@ -99,7 +99,7 @@ function setFloor({ userCount }, cable) {
   addUserCount(content, userCount)
   let floorIds = [2, 1, 0]
 
-  content.innerHTML += '<p>Please tell us in which floor you are, this will help us to find you.</p>'
+  content.innerHTML += '<p>Please tell us in which floor you are, this will help us to locate you.</p>'
   floorIds.map((id) => {
     let btn = document.createElement('button')
     btn.setAttribute('class', 'btn btn-dark')
