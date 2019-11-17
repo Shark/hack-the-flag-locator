@@ -12,6 +12,7 @@ namespace :user do
   task registration: :environment do
     communicator = UserCommunicator.new(influxdb_url: ENV.fetch('INFLUXDB_URL'))
     loop do
+      DefaultPlayers.run
       communicator.run
       sleep 5
     end

@@ -1,17 +1,21 @@
 class DeviceLocator
+  # usage: DeviceLocator.new(influxdb_url: ENV.fetch('INFLUXDB_URL'))
   def initialize(influxdb_url:)
     @db = InfluxDB::Client.new(url: influxdb_url, open_timeout: 3)
   end
 
-  def total_user_count(ssid: nil)
-    query_suffix = "and ssid = '#{ssid}'" if ssid
-    users = db.query("select count(x) from movement where time > now()-3m #{query_suffix} group by mac")
-    users.count
+  def total_user_count
+    result = {}
+    SSIDS.each do |ssid|
+      result[ssid] = total_user_count_per_ssid(ssid: ssid)
+    end
+    result['global'] = total_user_count_per_ssid
+    result
   end
 
   def switched_users
     grouped = db.query 'select * from movement where time > now()-3m group by ssid'
-    grouped.select! {|entry| ['aalto', 'aalto open', 'Junction', 'eduroam'].include? entry['tags']['ssid']}
+    grouped.select! {|entry| SSIDS.include? entry['tags']['ssid']}
 
     mapping = {}
     grouped.each { |ssid| ssid['values'].each {|entry| mapping[entry['mac']] = []}}
@@ -36,6 +40,16 @@ class DeviceLocator
       end
       [mac, info]
     end.to_h
+  end
+
+  private
+
+  SSIDS = ['aalto', 'aalto open', 'Junction', 'eduroam'].freeze
+
+  def total_user_count_per_ssid(ssid: nil)
+    query_suffix = "and ssid = '#{ssid}'" if ssid
+    users = db.query("select count(x) from movement where time > now()-3m #{query_suffix} group by mac")
+    users.count
   end
 
   attr_reader :db

@@ -5,16 +5,21 @@ class UserCommunicator
   end
 
   def run
+    # delete old users
+    User.where('created_at < ?', 1.hour.ago).delete_all
+
+    total_user_count = locator.total_user_count
+
     # awaiting instructions
     User.awaiting_instructions.each do |user|
       puts "#{user.name} awaiting instructions"
-      WaitForMacChannel.broadcast_to user, type: 'WIFI', userCount: locator.total_user_count
+      WaitForMacChannel.broadcast_to user, type: 'WIFI', userCount: total_user_count.fetch('global')
     end
 
     # selected current wifi
     User.selected_current_wifi.each do |user|
       puts "#{user.name} selected current wifi"
-      WaitForMacChannel.broadcast_to user, type: 'CHANGE_WIFI', userCount: locator.total_user_count(ssid: user.from_wifi)
+      WaitForMacChannel.broadcast_to user, type: 'CHANGE_WIFI', userCount: total_user_count.fetch(user.from_wifi)
     end
 
     # selected both wifis but not the floor
