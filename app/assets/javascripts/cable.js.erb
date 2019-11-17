@@ -28,6 +28,7 @@
 
 
 function enableRedirectButton(url) {
+  hideSpinner()
   let content = document.querySelector('#content')
   let btn = document.createElement('button')
 
@@ -41,6 +42,7 @@ function enableRedirectButton(url) {
 }
 
 function wifiNetwork({ userCount }, cable) {
+  hideSpinner()
   let wifis = ['eduroam', 'Junction', 'aalto open']
   let content = document.querySelector('#content')
   let btn = document.createElement('button')
@@ -64,10 +66,12 @@ function wifiNetwork({ userCount }, cable) {
   content.appendChild(btn)
   btn.addEventListener('click',() => {
     cable.perform('update_from_wifi', { wifi: selectGotoWifi.value })
+    showSpinner()
   })
 }
 
 function changeWifiNetwork({ userCount }, cable) {
+  hideSpinner()
   let wifis = ['eduroam', 'Junction', 'aalto open']
   let content = document.querySelector('#content')
   let btn = document.createElement('button')
@@ -91,10 +95,12 @@ function changeWifiNetwork({ userCount }, cable) {
   content.appendChild(btn)
   btn.addEventListener('click',() => {
     cable.perform('update_to_wifi', { wifi: selectGotoWifi.value })
+    showSpinner()
   })
 }
 
 function setFloor({ userCount }, cable) {
+  hideSpinner()
   let content = document.querySelector('#content')
   addUserCount(content, userCount)
   let floorIds = [2, 1, 0]
@@ -104,6 +110,7 @@ function setFloor({ userCount }, cable) {
     let btn = document.createElement('button')
     btn.setAttribute('class', 'btn btn-dark')
     btn.innerHTML = `<img src="/plans/${id}.png" width='100%'/>`
+    btn.style['margin-bottom'] = '16px';
     let wrapper_row = document.createElement('div')
     let wrapper_col = document.createElement('div')
     wrapper_row.setAttribute('class', 'row')
@@ -111,15 +118,27 @@ function setFloor({ userCount }, cable) {
     wrapper_row.appendChild(wrapper_col)
     wrapper_col.appendChild(btn)
     content.appendChild(wrapper_row)
-    btn.addEventListener('click', () => cable.perform('update_floor', { floor: id }))
+    btn.addEventListener('click', () => {
+      cable.perform('update_floor', { floor: id })
+      showSpinner()
+    })
   })
 }
 
 function setWait() {
   let content = document.querySelector('#content')
-  content.innerHTML = '<h2>We are searching for you <div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></h2>'
+  content.innerHTML = '<h2>We are searching for you</h2>'
+  showSpinner()
 }
 
 function addUserCount(content, userCount) {
   content.innerHTML = '<h2>You could be one of ' + userCount + ' Users</h2>'
+}
+
+function showSpinner() {
+  document.querySelector('#spinner').style.display = 'inline-block'
+}
+
+function hideSpinner() {
+  document.querySelector('#spinner').style.display = 'none'
 }
