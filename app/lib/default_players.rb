@@ -9,7 +9,7 @@ class DefaultPlayers
     joe = User.find_or_create_by!(name: 'Joe', mac: '00:00:0a:5d:48:42')
     joe.update!(created_at: Time.now)
 
-    jonas = User.find_or_create_by!(name: 'Jonas', mac: '00:00:b8:04:c2:92')
+    jonas = User.find_or_create_by!(name: 'Jonas', mac: '00:00:99:4d:d4:f4')
     jonas.update!(created_at: Time.now)
 
     kai = User.find_or_create_by!(name: 'Kai', mac: '00:00:59:e7:a7:93')
