@@ -53,7 +53,7 @@ class UserCommunicator
       elsif possible_users == 1
         puts 'it just works'
         user.update! possible_users.keys.first
-        WaitForMacChannel.broadcast_to user, type: 'MAC_FOUND', url: 'http://www.google.com/search?q=fickdich'
+        WaitForMacChannel.broadcast_to user, type: 'MAC_FOUND', url: "#{ENV.fetch('GAME_REDIRECT')}#{user.name}"
       else
         puts 'go somewhere else and try again'
       end
