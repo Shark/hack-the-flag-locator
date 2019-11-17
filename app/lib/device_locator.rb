@@ -17,12 +17,12 @@ class DeviceLocator
     grouped.each { |ssid| ssid['values'].each {|entry| mapping[entry['mac']] = []}}
     grouped.each do |ssid|
       ssid['values'].each do |entry|
-        mapping[entry['mac']] = mapping[entry['mac']] + [ssid['tags']['ssid']]
+        mapping[entry['mac']] = mapping[entry['mac']] | [ssid['tags']['ssid']]
       end
     end
 
     mapping.select! {|_mac, ssids| ssids.count > 1}
-    mapping.map do |mac, ssids|
+    mapping = mapping.map do |mac, ssids|
       group_first = grouped.find {|group| group['tags']['ssid'] == ssids[0]}
       group_second = grouped.find {|group| group['tags']['ssid'] == ssids[1]}
       entry_first = group_first['values'].reverse_each.find {|entry| entry['mac'] == mac}

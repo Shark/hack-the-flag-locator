@@ -1,7 +1,7 @@
 class UserCommunicator
   def initialize(influxdb_url:)
     @db = InfluxDB::Client.new(url: influxdb_url, open_timeout: 3)
-    @locator = DeviceLocator.new(url: influxdb_url)
+    @locator = DeviceLocator.new(influxdb_url: influxdb_url)
   end
 
   def run
@@ -29,7 +29,7 @@ class UserCommunicator
         puts 'oops an eror'
       elsif possible_users.count == 1
         puts 'it just works'
-        user.update! possible_users.keys.first
+        user.update! mac: possible_users.keys.first
         WaitForMacChannel.broadcast_to user, type: 'MAC_FOUND', url: 'http://www.google.com/search?q=fickdich'
       else
         WaitForMacChannel.broadcast_to user, type: 'FLOOR', userCount: possible_users.count
