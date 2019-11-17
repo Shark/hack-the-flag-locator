@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   root 'users#new', as: :new_user
   get :join, to: 'users#show', as: :join
   post :create, to: 'users#create', as: :create
-  post 'users/:user_name', to: 'users#update', as: :update
+  get :destroy, to: 'users#destroy', as: :destroy
   mount ActionCable.server, at: '/cable'
 
   scope '/.well-known', controller: :health do

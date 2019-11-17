@@ -20,6 +20,16 @@ class UsersController < ApplicationController
     redirect_to join_path
   end
 
+  def destroy
+    redirect_to new_user_path unless user_exists?
+
+    user = User.find_by name: session[:user_name]
+    user.destroy!
+    session[:user_name] = nil
+    flash[:info] = 'Your session was restarted'
+    redirect_to new_user_path
+  end
+
   private
 
   def generate_name
