@@ -1,4 +1,6 @@
-.jumbotron.text-center
+- if flash[:info].present?
+  .alert.alert-info{style: 'margin-top: 15px;'}= flash[:info]
+.jumbotron.text-center{style: 'overflow-wrap: break-word;'}
   = image_tag 'flag.png', height: '150', width: 'auto'
   %h1.display-4 Welcome to
   %h1.display-4 Hack the Flag

@@ -1,5 +1,11 @@
-.jumbotron.text-center
+.jumbotron.text-center{style: 'overflow-wrap: break-word;'}
   = image_tag 'flag.png', height: '150', width: 'auto'
   %h1= "Hey there, your name will be #{@user.name}"
   %hr.my-4
   #content
+  #spinner.spinner-border{role: 'status'}
+    %span.sr-only Loading...
+  %br
+  %br
+  %p.small If you want to retry the registration process, you can reset your session. Please be aware that it may take a few minutes to complete the registration process.
+  = link_to 'Reset Session', destroy_path, role: 'button', class: 'btn btn-outline-danger'
