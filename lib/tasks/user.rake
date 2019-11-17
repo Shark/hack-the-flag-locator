@@ -9,7 +9,7 @@ namespace :user do
   end
 
   desc 'communicate with users on registration page'
-  task user_registration: :environment do
+  task registration: :environment do
     communicator = UserCommunicator.new(influxdb_url: ENV.fetch('INFLUXDB_URL'))
     loop do
       communicator.run
